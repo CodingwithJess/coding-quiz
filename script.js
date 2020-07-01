@@ -1,5 +1,5 @@
 // Psuedo code:
-// Create a timer attached to a button with a starting value of 0
+
 // When timer is pressed start a reverse countdown
 // Create a 0 for countdown
 // When countdown starts, start quiz
@@ -11,30 +11,74 @@ var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("results");
 var submitButton = document.getElementById("submit")
 
-var secondsLeft = 60;
+var secondsDisplay = document.querySelector(".timer")
+var totalSeconds = 60;
+var secondsElapsed = 0;
+var interval;
+var questioncount;
+
 var startQuiz = document.querySelector("#start")
 
+var score =0;
+var j = 0;
+
+// Timer code// Create a timer attached to a button with a starting value of 0
+function getFormattedSeconds(){
+  var secondsLeft = (totalSeconds - secondsElapsed);
+  var formattedSeconds;
+
+  if (secondsLeft < 10){
+    formattedSeconds = "0" + secondsLeft;
+  }else {
+    formattedSeconds = secondsLeft;
+  }
+  return formattedSeconds;
+}
+
+function renderTime(){
+  secondsDisplay.textContent = getFormattedSeconds();
+  if (secondsElapsed >= totalSeconds){
+    stopTimer();
+  }
+}
+
+function startTimer() {
+  getQuestions(0);
+
+  interval = setInterval(function () {
+      secondsElapsed++;
+      renderTime();
+  }, 1000);
+}
+
+function stopTimer() {
+  secondsElapsed = 0;
+  renderTime();
+  clearInterval(interval);
+
+
+  // Questions code
 var myQuestions = [
   { question: "Commonly used data types DO NOT include ________:",
     answers: ["Strings", "Booleans", "Alerts", "Numbers"],
-    correct: "Alerts"
+    correct: "Alerts",
   }, {
     question: "What syntax is used in JavaScript for single line comments?:",
     answers: ["||", "**", "``", "//"],                                          
-    correct: "//"
+    correct: "//",
   }, {
     question: "Which of the following is the correct method for outputting information to the console?",
     answers: ["console.print()", "console.write()", "console.log()", "console.output()"],
     correct: "console.log()"
-  },{
+  }, {
     question: "Git is a _______ control system:",
     answers: ["Cloning", "Dynamic", "Gaming", "Version"],
-    correct: "Version"
-  },{
+    correct: "Version",
+  }, {
     question: "The condition in an if / else statement is enclosed within ____.",
     answers: ["Quotes", "Curly brackets", "Parentheses", "Square brackets"],
     correct: "Parentheses"
-
+  }
 ];
 
 function renderQuestions (){
