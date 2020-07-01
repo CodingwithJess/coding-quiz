@@ -11,31 +11,50 @@ var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("results");
 var submitButton = document.getElementById("submit")
 
+var secondsLeft = 60;
+var startQuiz = document.querySelector("#start")
 
 var myQuestions = [
   { question: "Commonly used data types DO NOT include ________:",
-    ans: ["Strings", "Booleans", "Alerts", "Numbers"],
-    answer: "Alerts"
+    answers: ["Strings", "Booleans", "Alerts", "Numbers"],
+    correct: "Alerts"
   }, {
     question: "What syntax is used in JavaScript for single line comments?:",
-    ans: ["||", "**", "``", "//"],                                          
-    answer: "//"
+    answers: ["||", "**", "``", "//"],                                          
+    correct: "//"
   }, {
     question: "Which of the following is the correct method for outputting information to the console?",
-    ans: ["console.print()", "console.write()", "console.log()", "console.output()"],
-    answer: "console.log()"
+    answers: ["console.print()", "console.write()", "console.log()", "console.output()"],
+    correct: "console.log()"
   },{
     question: "Git is a _______ control system:",
-    ans: ["Cloning", "Dynamic", "Gaming", "Version"],
-    answer: "Version"
+    answers: ["Cloning", "Dynamic", "Gaming", "Version"],
+    correct: "Version"
   },{
     question: "The condition in an if / else statement is enclosed within ____.",
-    ans: ["Quotes", "Curly brackets", "Parentheses", "Square brackets"],
-    answer: "Parentheses"
+    answers: ["Quotes", "Curly brackets", "Parentheses", "Square brackets"],
+    correct: "Parentheses"
 
 ];
 
-function buildQuiz (){
+function renderQuestions (){
+  document.querySelector(".questions").innerHTML ="";
+  startQuiz.setAttribute("style", "display:none");
+  document.querySelector(".quiz").setAttribute("style","display:block");
+
+  var q = myQuestions[j].answers;
+  var questionEl = document.createElement("h2");
+  var ans = myQuestions[j].answers;
+
+  questionEl.textContent = q;
+  document.querySelector(".questions").appendChild(questionEl)
+
+  for (var i = 0; i < ans.length; i++){
+    var ansBtn = document.createElement("button");
+    ansBtn.textContent = ans[i];
+    document.querySelector(".questions").appendChild(ansBtn);
+    ansBtn.addEventListener("click", checkAnswer);
+  }
 
 }
 

@@ -4,20 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Coding Quiz!</title>
-    <!-- Font Awesome Link -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap Link -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="styles.css"
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery.js"></script>
 
 </head>
 
 <body>
-      <div id="quiz"></div>
-      <button id ="submit">Submit Quiz</button>
-      <div id ="results"></div>
+  <nav class="navbar">
+    <!-- NEED A LINK TO ANOTHER HTML PAGE FOR HIGH SCORES???? -->
+    <a class="nav-link" href="highscores.html">View High Scores Here</a>
+    <div id="timer"></div>
+  </nav>
+
+  <section class="container">
+    <h1>Coding Quiz!</h1>
+    <main id="main">
+      <div id="start">Start the Quiz</div>
+      <section class="quiz" style=display:none>
+        <row>
+          <card class="questions">
+            <!-- This will hold the various questions and multiple choice answers. -->
+          </card>
+        </row>
+      </section>
+    </main>
+  </section>
+<script rel="script" src="script.js"></script>
+
 </body>
 
 </html>
