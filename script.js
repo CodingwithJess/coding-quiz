@@ -3,58 +3,51 @@
 // When timer is pressed start a reverse countdown
 // Create a 0 for countdown
 // When countdown starts, start quiz
-// Start Quiz will be on appended page
 
-// Append the question: choices
-//if the right answer, textcontent "Correct!" and go to next question
+
 var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("results");
-var submitButton = document.getElementById("submit")
+var submitButton = document.getElementById("submit");
 
-var secondsDisplay = document.querySelector(".timer")
+var secondsDisplay = document.getElementById("timer");
 var totalSeconds = 60;
 var secondsElapsed = 0;
-var interval;
-var questioncount;
+var interval = 0;
 
-var startQuiz = document.querySelector("#start")
+var startButton = document.getElementById("start");
 
 var score =0;
 var j = 0;
 
 // Timer code// Create a timer attached to a button with a starting value of 0
-function getFormattedSeconds(){
-  var secondsLeft = (totalSeconds - secondsElapsed);
-  var formattedSeconds;
+var timeLeft = 0;
+var timer;
 
-  if (secondsLeft < 10){
-    formattedSeconds = "0" + secondsLeft;
-  }else {
-    formattedSeconds = secondsLeft;
-  }
-  return formattedSeconds;
+//starts the countdown timer once user clicks the 'start' button
+function start() {
+    var startQuiz = document.getElementById("startQuiz");
+    startQuiz.setAttribute("class", "hide")
+    var questionDiv = document.getElementById("questionDiv");
+    questionDiv.removeAttribute("class")
+
+    renderQuestions()
+
+    // timeLeft = 75;
+    // document.getElementById("timer").innerHTML = timeLeft;
+
+    // timer = setInterval(function() {
+    //     timeLeft--;
+    //     document.getElementById("timer").innerHTML = timeLeft;
+    //     //proceed to end the game function when timer is below 0 at any time
+    //     if (timeLeft <= 0) {
+    //         clearInterval(timer);
+    //         endGame(); 
+    //     }
+    // }, 1000);
+
+    // next();
 }
 
-function renderTime(){
-  secondsDisplay.textContent = getFormattedSeconds();
-  if (secondsElapsed >= totalSeconds){
-    stopTimer();
-  }
-}
-
-function startTimer() {
-  getQuestions(0);
-
-  interval = setInterval(function () {
-      secondsElapsed++;
-      renderTime();
-  }, 1000);
-}
-
-function stopTimer() {
-  secondsElapsed = 0;
-  renderTime();
-  clearInterval(interval);
 
 
   // Questions code
@@ -80,41 +73,35 @@ var myQuestions = [
     correct: "Parentheses"
   }
 ];
+var questionIndex = 0;
 
 function renderQuestions (){
-  document.querySelector(".questions").innerHTML ="";
-  startQuiz.setAttribute("style", "display:none");
-  document.querySelector(".quiz").setAttribute("style","display:block");
+    var currentQuestion = myQuestions[questionIndex]
+    var getQuestion = document.getElementById("questionTitle")
+    getQuestion.textContent = currentQuestion.question
 
-  var q = myQuestions[j].answers;
-  var questionEl = document.createElement("h2");
-  var ans = myQuestions[j].answers;
-
-  questionEl.textContent = q;
-  document.querySelector(".questions").appendChild(questionEl)
-
-  for (var i = 0; i < ans.length; i++){
-    var ansBtn = document.createElement("button");
-    ansBtn.textContent = ans[i];
-    document.querySelector(".questions").appendChild(ansBtn);
-    ansBtn.addEventListener("click", checkAnswer);
-  }
-
+    currentQuestion.answers.forEach(function(choice, i) {
+      var createButton = document.createElement("button")
+      createButton.setAttribute("class", "choice")
+      createButton.setAttribute("value",choice)
+      createButton.textContent = choice
+      var choicesEl = document.getElementById("choices")
+      choicesEl.appendChild(createButton)
+    })
+  
 }
+
+function questionClick (){
+    questionIndex++;
+    if (questionIndex === myQuestions.length){
+      // call end quiz function
+    } else {
+      renderQuestions()
+    }
+}
+
 
 function showResults(){
 
 }
-
-buildQuiz();
-
-submitButton.addEventListener("click", showResults);
-
-// else,  user selects the wrong  answer, textcontent "Wrong!"  and -10 seconds from timer
-
-// Final score will keep track of how many the user got right
-// Left over time will be deducted from final score
-// Final Score Appended page
-// Captures local storage
-// Travels to another HTML
-// Retrieved highscores
+startButton.onclick=start

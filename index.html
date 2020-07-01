@@ -5,13 +5,8 @@
     <meta charset="UTF-8">
     <title>Coding Quiz!</title>
     <!-- Bootstrap Link -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css"
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
   <nav class="navbar">
     <!-- NEED A LINK TO ANOTHER HTML PAGE FOR HIGH SCORES???? -->
@@ -22,14 +17,18 @@
   <section class="container">
     <h1>Coding Quiz!</h1>
     <main id="main">
-      <div id="start">Start the Quiz</div>
-      <section class="quiz" style=display:none>
-        <row>
-          <card class="questions">
-            <!-- This will hold the various questions and multiple choice answers. -->
-          </card>
-        </row>
-      </section>
+      <div id="startQuiz"><button id="start">Start the Quiz</button></div>
+      <!-- <section class="quiz hide" style=display:none>
+        <row> -->
+           <!-- This will hold the various questions and multiple choice answers. -->
+          <div id="questionDiv" class="hide">
+            <h2 id="questionTitle"></h2>
+            <card id="choices" class="questions"></card>
+          </div> 
+        <!-- </row>
+      </section> -->
+       <!-- This will hold the 'right' or 'wrong message' after they answer questions. -->
+      <section class="results hide" style="display:none"></section>
     </main>
   </section>
 <script rel="script" src="script.js"></script>
