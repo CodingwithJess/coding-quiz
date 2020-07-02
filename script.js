@@ -7,14 +7,13 @@ var choicesEl = document.getElementById("choices");
 var timerEl = document.getElementById("time");
 var questionDiv = document.getElementById("questionDiv");
 var endScore=document.getElementById("endscore")
+var hiScores = JSON.parse(window.localStorage.getItem("High Scores")) || [];
 var totalSeconds = 60;
 var secondsElapsed = 0;
 var interval = 0;
 var endScreen = document.getElementById("endscreen");
 var startButton = document.getElementById("start");
 var score =0;
-
-console.log(highScoreTarget)
 
 // Timer code//
 var time = 60;
@@ -117,8 +116,6 @@ function storeScores (){
     name: userName
   };
   console.log(finalScore)
-
- 
 
   hiScores.push(finalScore);
   window.localStorage.setItem("High Scores", JSON.stringify(hiScores));
