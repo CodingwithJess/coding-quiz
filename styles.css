@@ -18,6 +18,8 @@
   }
   
   #start {
+  display: flex;
+  justify-content: center;  
   color:#FFBEA8;
   background-color:#FF847C;
   text-align:center;
@@ -56,6 +58,14 @@
   padding:15px;
   }
   
+  #questionDiv, #results, #endscreen {
+    text-align: center;
+  }
+
+  li {
+    text-align: center;
+  }
+
   .nav-link,#timer {
   color:#FF847C;
   border-radius:20px;
