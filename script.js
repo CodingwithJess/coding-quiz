@@ -8,46 +8,40 @@
 var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("results");
 var submitButton = document.getElementById("submit");
-
-var secondsDisplay = document.getElementById("timer");
+var choicesEl = document.getElementById("choices");
+var timerEl = document.getElementById("time");
+var questionDiv = document.getElementById("questionDiv");
 var totalSeconds = 60;
 var secondsElapsed = 0;
 var interval = 0;
-
+var endScreen = document.getElementById("endscreen");
 var startButton = document.getElementById("start");
 
 var score =0;
 var j = 0;
 
 // Timer code// Create a timer attached to a button with a starting value of 0
-var timeLeft = 0;
-var timer;
+var time = 60;
+var timerId ;
 
 //starts the countdown timer once user clicks the 'start' button
 function start() {
     var startQuiz = document.getElementById("startQuiz");
     startQuiz.setAttribute("class", "hide")
-    var questionDiv = document.getElementById("questionDiv");
     questionDiv.removeAttribute("class")
-
+    timerId=setInterval(clock, 1000)
+    timerEl.textContent=time
     renderQuestions()
 
-    // timeLeft = 75;
-    // document.getElementById("timer").innerHTML = timeLeft;
-
-    // timer = setInterval(function() {
-    //     timeLeft--;
-    //     document.getElementById("timer").innerHTML = timeLeft;
-    //     //proceed to end the game function when timer is below 0 at any time
-    //     if (timeLeft <= 0) {
-    //         clearInterval(timer);
-    //         endGame(); 
-    //     }
-    // }, 1000);
-
-    // next();
 }
 
+function clock(){
+  time--
+  timerEl.textContent=time
+  if (time <= 0){
+    endQuiz()
+  }
+}
 
 
   // Questions code
@@ -79,29 +73,46 @@ function renderQuestions (){
     var currentQuestion = myQuestions[questionIndex]
     var getQuestion = document.getElementById("questionTitle")
     getQuestion.textContent = currentQuestion.question
-
+    choicesEl.innerHTML = ""
     currentQuestion.answers.forEach(function(choice, i) {
       var createButton = document.createElement("button")
       createButton.setAttribute("class", "choice")
       createButton.setAttribute("value",choice)
       createButton.textContent = choice
-      var choicesEl = document.getElementById("choices")
+      createButton.onclick= questionClick 
       choicesEl.appendChild(createButton)
     })
   
 }
 
 function questionClick (){
-    questionIndex++;
-    if (questionIndex === myQuestions.length){
-      // call end quiz function
+  if (this.value !== myQuestions[questionIndex].correct){
+    resultsContainer.removeAttribute("class")
+    time-=10
+    resultsContainer.textContent = "Incorrect!"
+  }else{
+    resultsContainer.removeAttribute("class")
+    resultsContainer.textContent = "Correct!"
+  }
+  questionIndex++;
+  if (questionIndex === myQuestions.length){
+      endQuiz()
     } else {
       renderQuestions()
     }
 }
-
-
-function showResults(){
+function endQuiz(){
+  clearInterval(timerId)
+  endScreen.removeAttribute("class")
+  var endScore=document.getElementById("endscore")
+  endScore.textContent = "Your Score: "+ time
+  questionDiv.setAttribute("class", "hide")
 
 }
+
+// function showResults(){
+
+// }
+
+
 startButton.onclick=start
