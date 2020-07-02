@@ -1,9 +1,3 @@
-// Psuedo code:
-
-// When timer is pressed start a reverse countdown
-// Create a 0 for countdown
-// When countdown starts, start quiz
-
 
 var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("results");
@@ -11,6 +5,7 @@ var submitButton = document.getElementById("submit");
 var choicesEl = document.getElementById("choices");
 var timerEl = document.getElementById("time");
 var questionDiv = document.getElementById("questionDiv");
+var endScore=document.getElementById("endscore")
 var totalSeconds = 60;
 var secondsElapsed = 0;
 var interval = 0;
@@ -18,9 +13,8 @@ var endScreen = document.getElementById("endscreen");
 var startButton = document.getElementById("start");
 
 var score =0;
-var j = 0;
 
-// Timer code// Create a timer attached to a button with a starting value of 0
+// Timer code//
 var time = 60;
 var timerId ;
 
@@ -34,7 +28,7 @@ function start() {
     renderQuestions()
 
 }
-
+// end quiz if timer hits zero
 function clock(){
   time--
   timerEl.textContent=time
@@ -89,10 +83,10 @@ function questionClick (){
   if (this.value !== myQuestions[questionIndex].correct){
     resultsContainer.removeAttribute("class")
     time-=10
-    resultsContainer.textContent = "Incorrect!"
+    resultsContainer.textContent = "Your last answer was incorrect."
   }else{
     resultsContainer.removeAttribute("class")
-    resultsContainer.textContent = "Correct!"
+    resultsContainer.textContent = "Your last answer was correct!"
   }
   questionIndex++;
   if (questionIndex === myQuestions.length){
@@ -104,15 +98,33 @@ function questionClick (){
 function endQuiz(){
   clearInterval(timerId)
   endScreen.removeAttribute("class")
-  var endScore=document.getElementById("endscore")
   endScore.textContent = "Your Score: "+ time
   questionDiv.setAttribute("class", "hide")
 
 }
 
-// function showResults(){
+function storeScores (){
+  var userName = document.getElementById("score-name").value.trim();
+  var finalScore = {
+    score: score,
+    name: userName
+  };
+  var hiScores = JSON.parse(window.localStorage.getItem("High Scores")) || [];
 
-// }
+  hiScores.push(finalScore);
+  window.localStorage.setItem("High Scores", JSON.stringify(hiScores));
+}
+
+function displayScores(){
+  var hiScores = JSON.parse(window.localStorage.getItem("High Scores")) || [];
+
+  hiScores.forEach(function(score){
+    var pTag = document.createElement("p");
+    pTag.textContent = score.name + "" + score.score;
+    document.querySelector("#high-scores").appendChild(pTag);
+  })
+
+}
 
 
 startButton.onclick=start
